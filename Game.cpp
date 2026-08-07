@@ -82,7 +82,8 @@ void Game::Render() const
 	ball.Draw();
 
 	// TODO #3 - Update render to render all bricks
-	brick.Draw();
+	for (const Box& brick : bricks)
+		brick.Draw();
 
 	Console::Lock(false);
 }
