@@ -8,6 +8,7 @@ Game::Game()
 
 void Game::Reset()
 {
+	
 	Console::SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	Console::CursorVisible(false);
 	paddle.width = 12;
@@ -20,12 +21,24 @@ void Game::Reset()
 	ResetBall();
 
 	// TODO #2 - Add this brick and 4 more bricks to the vector
-	brick.width = 10;
-	brick.height = 2;
-	brick.x_position = 0;
-	brick.y_position = 5;
-	brick.doubleThick = true;
-	brick.color = ConsoleColor::DarkGreen;
+	bricks.clear();
+
+	const int brickCount = 5;
+	const int gap = 1;
+	const int brickWidth = 10;
+	const int columnX = 4;
+	const int rowY = 5;
+
+	for (int i = 0; i < brickCount; ++i) {
+		Box brick;
+		brick.width = brickWidth;
+		brick.height = 2;
+		brick.x_position = columnX + i * (brickWidth + gap);
+		brick.y_position = rowY;
+		brick.doubleThick = true;
+		brick.color = ConsoleColor::DarkGreen;
+		bricks.push_back(brick);
+	}
 }
 
 void Game::ResetBall()
