@@ -93,7 +93,10 @@ void Game::Render() const
 		Console::SetCursorPosition(WINDOW_WIDTH / 2 - 15, WINDOW_HEIGHT / 2);
 		std::cout << "Round Complete! Press R to reset." << std::endl;
 	}
-	
+	else if (lost) {
+		Console::SetCursorPosition(WINDOW_WIDTH / 2 - 15, WINDOW_HEIGHT / 2);
+		std::cout << "You Lose! Press R to reset" << std::endl;
+	}
 
 	Console::Lock(false);
 }
@@ -126,4 +129,10 @@ void Game::CheckCollision()
 	}
 
 	// TODO #7 - If ball touches bottom of window, pause ball and display (render) defeat text with R to reset
+	if (ball.y_position >= WINDOW_HEIGHT - 1)
+	{
+		ball.moving = false;
+		lost = true;
+	}
+	
 }
