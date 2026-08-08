@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "Game.h"
+#include <iostream>
 
 Game::Game()
 {
 	Reset();
+	won = false;
+	lost = false;
 }
 
 void Game::Reset()
@@ -77,13 +80,20 @@ void Game::Render() const
 {
 	Console::Lock(true);
 	Console::Clear();
-	
+
 	paddle.Draw();
 	ball.Draw();
 
 	// TODO #3 - Update render to render all bricks
-	for(const Box& brick : bricks)
+	for (const Box& brick : bricks)
 		brick.Draw();
+
+	//Win or Lose messages
+	if (won) {
+		Console::SetCursorPosition(WINDOW_WIDTH / 2 - 15, WINDOW_HEIGHT / 2);
+		std::cout << "Round Complete! Press R to reset." << std::endl;
+	}
+	
 
 	Console::Lock(false);
 }
@@ -105,8 +115,10 @@ void Game::CheckCollision()
 	}
 
 	// TODO #6 - If no bricks remain, pause ball and display (render) victory text with R to reset
-	
-
+	if (bricks.empty()) {
+		ball.moving = false;
+		won = true;
+	}
 
 	if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
 	{
